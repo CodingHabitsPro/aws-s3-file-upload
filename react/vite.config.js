@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       // string shorthand
-      '/api': 'http://localhost:8080/',
+      '/api': 'https://aws-s3-post-upload.up.railway.app/',
     }
   }
 })
