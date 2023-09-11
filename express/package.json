@@ -16,9 +16,8 @@
     "sharp": "^0.30.6"
   },
   "scripts": {
-    "start": "node server.js",
-    "dev": "npx nodemon server.js",
-    "publish": "npm run build"
+    "start": "npx nodemon server.js",
+    "publish": "npx nodemon dist/index.js"
   },
   "keywords": [],
   "author": "",
