@@ -14,6 +14,17 @@ const prisma = new PrismaClient()
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 
+// Health check endpoint
+app.get('/', (req, res) => {
+  res.status(200).send({ status: 'ok' });
+});
+
+
+app.get('/hello', (req, res) => {
+  res.status(200).send({ message: 'hello world' });
+});
+
+
 const generateFileName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex')
 
 app.get("/api/posts", async (req, res) => {
@@ -43,7 +54,6 @@ app.post('/api/posts', upload.single('image'), async (req, res) => {
     .toBuffer()
 
   await uploadFile(fileBuffer, imageName, file.mimetype)
-
   const post = await prisma.posts.create({
     data: {
       imageName,
@@ -51,7 +61,7 @@ app.post('/api/posts', upload.single('image'), async (req, res) => {
     }
   })
   
-  res.status(201).send({})
+  res.status(201).send(post)
 })
 
 app.delete("/api/posts/:id", async (req, res) => {
@@ -64,4 +74,4 @@ app.delete("/api/posts/:id", async (req, res) => {
   res.send(post)
 })
 
-app.listen(process.env.PORT, () => console.log("listening on port 8080"))
+app.listen(process.env.PORT || 3333, () => console.log("listening on port 8080"))
